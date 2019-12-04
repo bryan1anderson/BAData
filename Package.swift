@@ -23,7 +23,8 @@ let package = Package(
     .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-beta.6"),
     .package(url: "https://github.com/kean/Nuke", from: "8.0.1"),
     .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.0.0"),
-    .package(url: "https://github.com/utahiosmac/Marshal", from: "1.2.8")
+    .package(url: "https://github.com/utahiosmac/Marshal", from: "1.2.8"),
+    .package(url: "https://github.com/arturdev/Unrealm.git", from: "0.2.5")
 
     ],
     targets: [
@@ -31,7 +32,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "BAData",
-            dependencies: ["SwiftyJSON", "RealmSwift", "PromiseKit", "PhoneNumberKit", "Alamofire", "Nuke", "RxSwift", "RxCocoa", "Marshal", "EMUtilities"]),
+            dependencies: ["SwiftyJSON", "RealmSwift", "PromiseKit", "PhoneNumberKit", "Alamofire", "Nuke", "RxSwift", "RxCocoa", "Marshal", "EMUtilities", "Unrealm"]),
         .testTarget(
             name: "BADataTests",
             dependencies: ["BAData"]),
