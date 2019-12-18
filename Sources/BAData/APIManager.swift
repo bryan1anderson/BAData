@@ -21,6 +21,8 @@ public protocol APIManagerProtocol: RequestInterceptor {
     var delegate: APIManagerDelegate? { get set }
     var token: String? { get }
     var defaults: UserDefaults { get }
+    var version: String { get }
+    func removeAuthToken()
 }
 
 public extension APIManagerProtocol {
@@ -32,7 +34,7 @@ public extension APIManagerProtocol {
         /// - parameter authToken:  Optional Authorization Header Token
         /// - parameter completion: Returns JSON or Error String
         func request(method: HTTPMethod, url: String, params: [String: Any]? = nil, encoding: ParameterEncoding = JSONEncoding.prettyPrinted, authToken: String? = nil, completion: JSONCompletion? = nil) {
-            var headers: [String: String] = [:]
+            var headers: [String: String] = ["Accept-Version": version]
             
             if let token = authToken ?? token {
                 headers["Authorization"] =  "Bearer " + token
@@ -131,8 +133,7 @@ public extension APIManagerProtocol {
                 //            SwopGlobalVars.sharedInstance.isManualLogout = true
                 
                 // make sure if we close the app we cannot auto-login
-                defaults.set(nil, for: .authToken)
-                defaults.synchronize()
+                removeAuthToken()
                 delegate?.shouldSetGlobal()
                 let data = response.data ?? Data()
 //                let json = try? JSON(data: data)
