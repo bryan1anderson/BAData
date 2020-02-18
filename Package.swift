@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "BAData",
-    platforms: [.iOS(.v12)],
+    platforms: [.iOS(.v12), .macOS(.v10_15)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-    .package(url: "https://github.com/dvlop-io/EMUtilities", from: "1.0.1"),
+        .package(url: "https://github.com/dvlop-io/EMUtilities", .branch("master")),
     .package(url: "https://github.com/marmelroy/PhoneNumberKit", from: "3.0.0"),
     .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-rc.3"),
     .package(url: "https://github.com/kean/Nuke", from: "8.0.1"),
