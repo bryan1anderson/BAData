@@ -7,6 +7,7 @@
 
 import Foundation
 import Nuke
+import UIKit
 
 public final class ImageFilterDrawInCircle: NSObject, ImageProcessing {
     public var identifier: String = "ImageFilterDrawInCircle"
