@@ -12,7 +12,9 @@ import SwiftyJSON
 import Marshal
 //import RxAlamofire
 import RxSwift
+import RxCocoa
 import EMUtilities
+import Reachability
 
 public protocol APIManagerProtocol: RequestInterceptor {
     var baseURL: String { get }
@@ -21,7 +23,7 @@ public protocol APIManagerProtocol: RequestInterceptor {
     var delegate: APIManagerDelegate? { get set }
     var token: String? { get }
     var defaults: UserDefaults { get }
-    var version: String { get }
+    var version: String? { get }
     func removeAuthToken()
 }
 
@@ -34,29 +36,51 @@ public extension APIManagerProtocol {
         /// - parameter authToken:  Optional Authorization Header Token
         /// - parameter completion: Returns JSON or Error String
         func request(method: HTTPMethod, url: String, params: [String: Any]? = nil, encoding: ParameterEncoding = JSONEncoding.prettyPrinted, authToken: String? = nil, completion: JSONCompletion? = nil) {
-            var headers: [String: String] = ["Accept-Version": version]
-            
-            if let token = authToken ?? token {
-                headers["Authorization"] =  "Bearer " + token
-            }
-            //headers?["Content-Type"] = "application/x-www-form-urlencoded charset=utf-8"
-            //TODO: Handle 500 and 403's
-            
-            let request = defaultManager.request(url, method: method, parameters: params, encoding: encoding, headers: HTTPHeaders(headers)).responseJSON { (response) in
-
-                self.process(response: response)
-          
-                do {
-                    guard let data = response.data else { throw DataError.failed(response: response) }
-                    let json = try JSON(data: data)
-                    completion?(.success(json))
-                }
-                catch {
-                    
-                    completion?(.failure(.failedResponse(error)))
+            do {
+                var headers: [String: String] = [:]
+                
+                if let token = authToken ?? token {
+                    headers["Authorization"] =  "Bearer " + token
                 }
                 
+                if let version = version {
+                    headers["Accept-Version"] = version
+                }
+                //headers?["Content-Type"] = "application/x-www-form-urlencoded charset=utf-8"
+                //TODO: Handle 500 and 403's
+                
+                var urlRequest = try URLRequest(url: url, method: method, headers: HTTPHeaders(headers))
+                
+                let reachability = try Reachability()
+                
+                if reachability.connection == .unavailable {
+                    urlRequest.cachePolicy = .returnCacheDataElseLoad
+                } else {
+                    urlRequest.cachePolicy = .useProtocolCachePolicy
+                }
+                
+                let encodedRequest = try encoding.encode(urlRequest, with: params)
+                
+                let request = defaultManager.request(encodedRequest).responseJSON { (response) in
+                    
+                    self.process(response: response)
+                    
+                    do {
+                        guard let data = response.data else { throw DataError.failed(response: response) }
+                        let json = try JSON(data: data)
+                        completion?(.success(json))
+                    }
+                    catch {
+                        
+                        completion?(.failure(.failedResponse(error)))
+                    }
+                    
+                }
+            } catch {
+                completion?(.failure(.failedResponse(error)))
             }
+            
+//            let request = defaultManager.request(url, method: method, parameters: params, encoding: encoding, headers: HTTPHeaders(headers))
             
         }
 
