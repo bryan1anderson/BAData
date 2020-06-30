@@ -10,12 +10,13 @@ import Nuke
 import UIKit
 
 public final class ImageFilterDrawInCircle: NSObject, ImageProcessing {
-    public var identifier: String = "ImageFilterDrawInCircle"
     
-    public func process(image: Image, context: ImageProcessingContext?) -> Image? {
+    public func process(_ image: PlatformImage) -> PlatformImage? {
         return drawImageInCircle(image: cropImageToSquare(image: image))
     }
     
+    public var identifier: String = "ImageFilterDrawInCircle"
+        
 }
 
 public func drawImageInCircle(image: UIImage?) -> UIImage? {

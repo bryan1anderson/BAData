@@ -31,7 +31,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "BAData",
-            dependencies: ["PhoneNumberKit", "Alamofire", "Nuke", "RxSwift", "RxCocoa", "Marshal", "EMUtilities", "SwiftyJSON", "Reachability"]),
+            dependencies: ["PhoneNumberKit", "Alamofire", "Nuke", "RxSwift", "RxCocoa", "Marshal", "BAUtilities", "SwiftyJSON", "Reachability"]),
         .testTarget(
             name: "BADataTests",
             dependencies: ["BAData"]),
