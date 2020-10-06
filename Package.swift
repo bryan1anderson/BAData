@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/bryan1anderson/BAUtilities", .branch("master")),
+        .package(url: "https://github.com/bryan1anderson/BAUtilities", .branch("dvlop-canvass")),
         .package(url: "https://github.com/marmelroy/PhoneNumberKit", from: "3.0.0"),
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-rc.3"),
         .package(url: "https://github.com/kean/Nuke", from: "9.1.1"),
@@ -34,8 +34,8 @@ let package = Package(
         .target(
             name: "BAData",
             dependencies: ["PhoneNumberKit", "Alamofire", "Nuke", "RxSwift", "RxCocoa", "Marshal", "BAUtilities", "SwiftyJSON", "Reachability", "CombineViewModel", "FetchImage"]),
-        .testTarget(
-            name: "BADataTests",
-            dependencies: ["BAData"]),
+//        .testTarget(
+//            name: "BADataTests",
+//            dependencies: ["BAData"]),
     ]
 )
