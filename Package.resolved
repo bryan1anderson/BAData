@@ -14,8 +14,8 @@
         "package": "BAUtilities",
         "repositoryURL": "https://github.com/bryan1anderson/BAUtilities",
         "state": {
-          "branch": "master",
-          "revision": "3f558b2356a7202dd03a7f0d4b87ee0bbf647a47",
+          "branch": "dvlop-canvass",
+          "revision": "3f6eb435c0a6001d560bc32f6298721ef31565d8",
           "version": null
         }
       },
@@ -104,9 +104,9 @@
         "package": "PromiseKit",
         "repositoryURL": "https://github.com/mxcl/PromiseKit",
         "state": {
-          "branch": "v7",
-          "revision": "9f494dd1c312b1325d709853255558585c070c46",
-          "version": null
+          "branch": null,
+          "revision": "aea48ea1855f5d82e2dffa6027afce3aab8f3dd7",
+          "version": "6.13.3"
         }
       },
       {
